@@ -1,0 +1,23 @@
+/node_modules
+/oh_modules
+/local.properties
+/.idea
+**/build
+/.hvigor
+.cxx
+/.clangd
+/.clang-format
+/.clang-tidy
+**/.test
+/.appanalyzer
+**/.preview
+
+### AI 工具缓存与个人产物 ###
+.codeartsdoer
+.arts
+.claude
+.codegenie
+.cursor
+.uploads
+jscrash-*.txt
+应用内产物（评价+错题+对话）

@@ -1,0 +1,11 @@
+{
+  "src": [
+    "pages/Index",
+    "pages/MainPage",
+    "pages/LearningSpacePage",
+    "pages/AssessmentCenterPage",
+    "pages/ProfilePage",
+    "pages/DiscussionThreadPage",
+    "pages/AssessmentReportPage"
+  ]
+}

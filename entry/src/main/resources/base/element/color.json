@@ -1,0 +1,80 @@
+{
+  "color": [
+    {
+      "name": "start_window_background",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "tech_blue_primary",
+      "value": "#0066CC"
+    },
+    {
+      "name": "tech_blue_secondary",
+      "value": "#0088FF"
+    },
+    {
+      "name": "tech_blue_light",
+      "value": "#E6F3FF"
+    },
+    {
+      "name": "text_primary",
+      "value": "#333333"
+    },
+    {
+      "name": "text_secondary",
+      "value": "#666666"
+    },
+    {
+      "name": "divider_color",
+      "value": "#E0E0E0"
+    },
+    {
+      "name": "success_color",
+      "value": "#4CAF50"
+    },
+    {
+      "name": "warning_color",
+      "value": "#FF9800"
+    },
+    {
+      "name": "error_color",
+      "value": "#F44336"
+    },
+    {
+      "name": "page_background",
+      "value": "#F5F5F5"
+    },
+    {
+      "name": "card_background",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "card_item_background",
+      "value": "#F5F5F5"
+    },
+    {
+      "name": "subtle_text",
+      "value": "#999999"
+    },
+    {
+      "name": "disabled_color",
+      "value": "#CCCCCC"
+    },
+    {
+      "name": "input_background",
+      "value": "#F0F0F0"
+    },
+    {
+      "name": "user_bubble_background",
+      "value": "#E3F2FD"
+    },
+    {
+      "name": "assistant_bubble_background",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "link_color",
+      "value": "#409EFF"
+    }
+  ]
+}

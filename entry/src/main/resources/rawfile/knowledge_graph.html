@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html, body { margin: 0; padding: 0; overflow: hidden; width: 100%; height: 100%; background: #FFFFFF; }
+    #mynetwork { width: 100%; height: 100%; }
+    html.dark, html.dark body { background: #1E1E1E; }
+  </style>
+  <script type="text/javascript" src="https://unpkg.com/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
+</head>
+<body>
+  <div id="mynetwork"></div>
+  <script type="text/javascript">
+    var container = document.getElementById('mynetwork');
+    var nodes = new vis.DataSet([]);
+    var edges = new vis.DataSet([]);
+    var isDark = false;
+    var options = {
+      nodes: {
+        shape: 'dot',
+        size: 20,
+        font: { size: 12, color: '#333333' },
+        borderWidth: 2,
+        shadow: true
+      },
+      edges: {
+        width: 2,
+        smooth: { type: 'continuous' },
+        arrows: { to: { enabled: true, scaleFactor: 0.5 } },
+        color: { inherit: 'from' }
+      },
+      physics: {
+        stabilization: { iterations: 150 },
+        barnesHut: {
+          gravitationalConstant: -3000,
+          centralGravity: 0.3,
+          springLength: 100,
+          springConstant: 0.05
+        }
+      },
+      interaction: {
+        hover: true,
+        tooltipDelay: 200,
+        zoomView: true,
+        dragView: true
+      }
+    };
+    var network = new vis.Network(container, { nodes: nodes, edges: edges }, options);
+
+    network.on('click', function(params) {
+      if (params.nodes.length > 0) {
+        var nodeId = params.nodes[0];
+        if (window.graphBridge && window.graphBridge.onNodeClick) {
+          window.graphBridge.onNodeClick(nodeId);
+        }
+      }
+    });
+
+    function applyTheme(dark) {
+      isDark = dark;
+      document.documentElement.className = dark ? 'dark' : '';
+      var textColor = dark ? '#E0E0E0' : '#333333';
+      var newOptions = {
+        nodes: { font: { color: textColor } }
+      };
+      network.setOptions(newOptions);
+    }
+
+    function initGraph(data) {
+      nodes.clear();
+      edges.clear();
+      var nodeItems = [];
+      for (var i = 0; i < data.nodes.length; i++) {
+        var n = data.nodes[i];
+        var color = '#0066CC';
+        if (n.type === 'controversy') color = '#9E9E9E';
+        else if (n.type === 'evidence') color = '#4CAF50';
+        else if (n.type === 'leftEvidence') color = '#0066CC';
+        else if (n.type === 'rightEvidence') color = '#FF9800';
+        else if (n.type === 'conclusion') color = '#4CAF50';
+        if (isDark) {
+          if (n.type === 'controversy') color = '#BDBDBD';
+          else if (n.type === 'evidence' || n.type === 'conclusion') color = '#66BB6A';
+          else if (n.type === 'leftEvidence') color = '#4DA6FF';
+          else if (n.type === 'rightEvidence') color = '#FFA726';
+          else color = '#4DA6FF';
+        }
+        var tooltip = n.label;
+        if (n.content) {
+          if (n.type === 'controversy') {
+            try {
+              var cData = JSON.parse(n.content);
+              tooltip = cData.topic || n.label;
+              if (cData.leftView && cData.leftView.title) {
+                tooltip += '\n观点A：' + cData.leftView.title;
+              }
+              if (cData.rightView && cData.rightView.title) {
+                tooltip += '\n观点B：' + cData.rightView.title;
+              }
+            } catch(e) {
+              tooltip = n.label;
+            }
+          } else {
+            tooltip = n.content;
+          }
+        }
+        nodeItems.push({
+          id: n.id,
+          label: n.label,
+          title: tooltip,
+          color: { background: color, border: color, highlight: { background: color, border: isDark ? '#E0E0E0' : '#333' } },
+          type: n.type
+        });
+      }
+      var edgeItems = [];
+      for (var j = 0; j < data.edges.length; j++) {
+        var e = data.edges[j];
+        var edgeColor = '#666666';
+        if (e.type === 'supports') edgeColor = '#4CAF50';
+        else if (e.type === 'opposes') edgeColor = '#F44336';
+        if (isDark) {
+          if (e.type === 'supports') edgeColor = '#66BB6A';
+          else if (e.type === 'opposes') edgeColor = '#EF5350';
+          else edgeColor = '#999999';
+        }
+        edgeItems.push({
+          id: e.id,
+          from: e.from,
+          to: e.to,
+          label: e.type,
+          color: { color: edgeColor, highlight: edgeColor },
+          arrows: 'to'
+        });
+      }
+      nodes.add(nodeItems);
+      edges.add(edgeItems);
+    }
+
+    function clearGraph() {
+      nodes.clear();
+      edges.clear();
+    }
+  </script>
+</body>
+</html>

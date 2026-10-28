@@ -1,0 +1,74 @@
+schema: spec-driven
+
+# Project context (optional)
+# This is shown to AI when creating artifacts.
+# Add your tech stack, conventions, style guides, domain knowledge, etc.
+context: |
+  Tech stack: HarmonyOS ArkTS, ArkUI
+  Framework: HarmonyOS SDK (API 9+)
+  Language: ArkTS (TypeScript-based)
+  Architecture: Module-based MVVM pattern
+  
+  Domain: Educational AI Learning Platform - "三问高效学习机"
+  Core Features:
+    - Flexible course generation triggered by user questions
+    - Three-question cognitive engine (心智模型提取 → 学术分歧挖掘 → 深度测评生成)
+    - Composite knowledge base (AI + User materials)
+    - Learning progress tracking with visualization
+    - Bloom's taxonomy-based assessment system
+  
+  UI/UX Guidelines:
+    - Minimalist design with tech-blue theme
+    - Card-based course management
+    - Knowledge graph visualization
+    - Radar charts for ability dimensions
+    - Progress bars and status indicators
+  
+  Data Persistence:
+    - Local RDB (Relational Database) for course data
+    - Preferences for user settings
+    - File storage for uploaded materials (PDF/Word/Markdown)
+  
+  Performance Requirements:
+    - Course generation response ≤ 2 seconds
+    - Knowledge graph loading ≤ 2 seconds
+    - Material parsing accuracy ≥ 95%
+  
+  Coding Conventions:
+    - Use @State, @Prop, @Link for state management
+    - Follow HarmonyOS component lifecycle (aboutToAppear, aboutToDisappear)
+    - Use RelativeContainer and Flex layouts
+    - Implement proper error handling and loading states
+    - Use Chinese for UI text, English for code/comments
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+rules:
+  proposal:
+    - Keep proposals focused on one major feature or module
+    - Always include "User Value" and "Technical Approach" sections
+    - Consider HarmonyOS-specific constraints (API level, permissions)
+    - Address data persistence requirements
+    - Include UI/UX considerations for minimalist design
+  
+  design:
+    - Use HarmonyOS ArkUI components (List, Grid, Tabs, etc.)
+    - Include state management strategy (@State, @Prop, @Link)
+    - Consider component reusability and modularity
+    - Address navigation between 4 main interfaces (Main, Learning, Assessment, Profile)
+    - Include loading states and error handling UI
+  
+  spec:
+    - Define clear data models for Course, KnowledgeBase, Assessment entities
+    - Include RDB schema definitions for persistence
+    - Specify API interfaces for AI integration (mock or real)
+    - Define knowledge graph data structure
+    - Include file parsing interfaces (PDF, Word, Markdown)
+  
+  tasks:
+    - Break tasks into chunks of max 4 hours
+    - Prioritize core features: Three-question engine > Course management > UI
+    - Include testing considerations for each task
+    - Address HarmonyOS build and deployment steps
+    - Consider incremental development approach
+    - Each task should produce testable functionality

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html, body { margin: 0; padding: 0; width: 100%; height: 100%; background: #FFFFFF; }
+    #bar { width: 100%; height: 100%; }
+    html.dark, html.dark body { background: #1E1E1E; }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+</head>
+<body>
+  <div id="bar"></div>
+  <script>
+    var chart = echarts.init(document.getElementById('bar'));
+    var isDark = false;
+
+    function applyTheme(dark) {
+      isDark = dark;
+      document.documentElement.className = dark ? 'dark' : '';
+    }
+
+    function renderBarChart(courseNames, conceptScores, criticalScores, practicalScores) {
+      var textColor = isDark ? '#999999' : '#666666';
+      var nameColor = isDark ? '#777777' : '#999999';
+      var splitColor = isDark ? '#333333' : '#F0F0F0';
+      var axisColor = isDark ? '#333333' : '#E0E0E0';
+      var conceptColor = isDark ? '#4DA6FF' : '#409EFF';
+      var criticalColor = isDark ? '#66BB6A' : '#67C23A';
+      var practicalColor = isDark ? '#FFA726' : '#E6A23C';
+
+      var option = {
+        grid: {
+          left: '12%',
+          right: '5%',
+          top: '12%',
+          bottom: '22%'
+        },
+        legend: {
+          data: ['概念理解', '批判思维', '实践迁移'],
+          bottom: 0,
+          textStyle: { fontSize: 11, color: textColor }
+        },
+        xAxis: {
+          type: 'category',
+          data: courseNames,
+          axisLabel: {
+            color: textColor,
+            fontSize: 11,
+            rotate: courseNames.length > 4 ? 20 : 0
+          },
+          axisLine: {
+            lineStyle: { color: axisColor }
+          },
+          axisTick: { show: false }
+        },
+        yAxis: {
+          type: 'value',
+          name: '分数',
+          nameTextStyle: {
+            color: nameColor,
+            fontSize: 11
+          },
+          max: 100,
+          axisLabel: {
+            color: textColor,
+            fontSize: 11
+          },
+          axisLine: { show: false },
+          splitLine: {
+            lineStyle: { color: splitColor, type: 'dashed' }
+          }
+        },
+        series: [
+          {
+            name: '概念理解',
+            type: 'bar',
+            data: conceptScores,
+            itemStyle: { color: conceptColor },
+            barMaxWidth: 20
+          },
+          {
+            name: '批判思维',
+            type: 'bar',
+            data: criticalScores,
+            itemStyle: { color: criticalColor },
+            barMaxWidth: 20
+          },
+          {
+            name: '实践迁移',
+            type: 'bar',
+            data: practicalScores,
+            itemStyle: { color: practicalColor },
+            barMaxWidth: 20
+          }
+        ],
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: { type: 'shadow' }
+        }
+      };
+      chart.setOption(option);
+    }
+
+    window.addEventListener('resize', function() {
+      chart.resize();
+    });
+  </script>
+</body>
+</html>

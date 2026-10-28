@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html, body { margin: 0; padding: 0; width: 100%; height: 100%; background: #FFFFFF; }
+    #radar { width: 100%; height: 100%; }
+    html.dark, html.dark body { background: #1E1E1E; }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+</head>
+<body>
+  <div id="radar"></div>
+  <script>
+    var chart = echarts.init(document.getElementById('radar'));
+    var isDark = false;
+
+    function applyTheme(dark) {
+      isDark = dark;
+      document.documentElement.className = dark ? 'dark' : '';
+    }
+
+    function renderRadar(conceptUnderstanding, criticalThinking, practicalTransfer) {
+      var textColor = isDark ? '#E0E0E0' : '#333333';
+      var splitColor = isDark ? '#333333' : '#E0E0E0';
+      var axisColor = isDark ? '#555555' : '#CCCCCC';
+      var splitAreaColors = isDark
+        ? ['#1E1E1E', '#222222', '#262626', '#2A2A2A', '#2E2E2E']
+        : ['#F5F7FA', '#EBF0F5', '#E0E8F0', '#D5E0EB', '#CAD8E6'];
+      var lineColor = isDark ? '#4DA6FF' : '#409EFF';
+
+      var option = {
+        radar: {
+          center: ['50%', '55%'],
+          indicator: [
+            { name: '概念理解', max: 100 },
+            { name: '批判思维', max: 100 },
+            { name: '实践迁移', max: 100 }
+          ],
+          shape: 'triangle',
+          splitNumber: 5,
+          axisName: {
+            color: textColor,
+            fontSize: 14,
+            fontWeight: 'bold'
+          },
+          splitLine: {
+            lineStyle: { color: splitColor }
+          },
+          splitArea: {
+            areaStyle: {
+              color: splitAreaColors
+            }
+          },
+          axisLine: {
+            lineStyle: { color: axisColor }
+          }
+        },
+        series: [{
+          type: 'radar',
+          data: [{
+            value: [conceptUnderstanding, criticalThinking, practicalTransfer],
+            name: '能力评估',
+            areaStyle: {
+              color: isDark ? 'rgba(77, 166, 255, 0.3)' : 'rgba(64, 158, 255, 0.3)'
+            },
+            lineStyle: {
+              color: lineColor,
+              width: 2
+            },
+            itemStyle: {
+              color: lineColor
+            },
+            symbol: 'circle',
+            symbolSize: 8
+          }]
+        }]
+      };
+      chart.setOption(option);
+    }
+
+    window.addEventListener('resize', function() {
+      chart.resize();
+    });
+  </script>
+</body>
+</html>
